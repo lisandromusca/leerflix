@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leerflix</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #netflix-intro {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            overflow: hidden;
+        }
+        .netflix-logo {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 200px;
+            font-weight: 400;
+            color: #e50914;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 1s ease-in-out;
+            white-space: nowrap;
+        }
+        .netflix-logo.animate {
+            opacity: 1;
+            transform: scale(1);
+        }
+        #usuario-selection {
+            display: none;
+            text-align: center;
+        }
+        .usuario-profiles {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+        .usuario-profile {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .usuario-profile:hover {
+            transform: scale(1.1);
+        }
+        .usuario-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .usuario-name {
+            font-size: 18px;
+        }
+        #content {
+            display: none;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            flex-wrap: wrap;
+        }
+        .logo {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 64px;
+            font-weight: 400;
+            color: #e50914;
+        }
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+        .nav a:hover {
+            color: #e50914;
+        }
+        .hero {
+            text-align: center;
+            padding: 100px 0;
+        }
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+        .cta-button {
+            background-color: #e50914;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .books-row, .top-10 {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding-bottom: 20px;
+            -webkit-overflow-scrolling: touch;
+        }
+        .book {
+            flex: 0 0 auto;
+            width: 200px;
+            transition: transform 0.3s ease;
+        }
+        .book:hover {
+            transform: scale(1.05);
+        }
+        .book img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .top-10-item {
+            position: relative;
+            flex: 0 0 auto;
+            width: 400px;
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+        }
+        .top-10-number {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            font-size: 200px;
+            font-weight: bold;
+            color: #000;
+            -webkit-text-stroke: 2px #fff;
+            line-height: 0.8;
+            z-index: 1;
+        }
+        .top-10-book {
+            position: relative;
+            left: 100px;
+            width: 300px;
+            height: 180px;
+            z-index: 2;
+        }
+        .top-10-book:hover {
+            transform: scale(1.05);
+        }
+        .top-10-book img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        @media (max-width: 480px) {
+            .netflix-logo {
+                font-size: 100px;
+            }
+            .logo {
+                font-size: 48px;
+            }
+            .hero h1 {
+                font-size: 36px;
+            }
+            .hero p {
+                font-size: 18px;
+            }
+            .usuario-profiles {
+                flex-wrap: wrap;
+            }
+            .usuario-profile {
+                width: calc(50% - 10px);
+                margin-bottom: 20px;
+            }
+            .usuario-avatar {
+                width: 100px;
+                height: 100px;
+            }
+            .top-10-item {
+                width: 300px;
+                height: 150px;
+            }
+            .top-10-number {
+                font-size: 150px;
+            }
+            .top-10-book {
+                left: 75px;
+                width: 225px;
+                height: 135px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="netflix-intro">
+        <div class="netflix-logo">LEERFLIX</div>
+    </div>
+
+    <div id="usuario-selection" class="container">
+        <div class="logo">LEERFLIX</div>
+        <h1>¿Quién está leyendo ahora?</h1>
+        <div class="usuario-profiles">
+            <div class="usuario-profile" onclick="selectusuario('Usuario 1')">
+                <img src="./profile.jpg" alt="Usuario 1" class="usuario-avatar">
+                <div class="usuario-name">Usuario 1</div>
+            </div>
+            <div class="usuario-profile" onclick="selectusuario('Usuario 2')">
+                <img src="./profile.jpg" alt="Usuario 2" class="usuario-avatar">
+                <div class="usuario-name">Usuario 2</div>
+            </div>
+            <div class="usuario-profile" onclick="selectusuario('Usuario 3')">
+                <img src="./profile.jpg" alt="Usuario 3" class="usuario-avatar">
+                <div class="usuario-name">Usuario 3</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="content" class="container">
+        <header class="header">
+            <div class="logo">LEERFLIX</div>
+            <nav class="nav">
+                <a href="#">Home</a>
+                <a href="#">Libros</a>
+                <a href="#">Lo más votado</a>
+                <a href="#">5to año</a>
+            </nav>
+        </header>
+        <section class="hero">
+            <h1>Bienvenido otra vez, <span id="selected-usuario"></span>!</h1>
+            <p>Lee tus libros favoritos, donde sea.</p>
+            <button class="cta-button">Comenzar a Leer</button>
+        </section>
+
+        <section class="libros">
+            <h2 class="section-title">Libros</h2>
+            <div class="books-row">
+                <a href="book-details.html">
+                    <div class="book">
+                        <img src="./snf.jpg" width="200" height="300" alt="Libro 1">
+                    </div>
+                </a>
+                <a href="book-details.html">
+                    <div class="book">
+                        <img src="./snf.jpg" width="200" height="300" alt="Libro 2">
+                    </div>
+                </a>
+                <a href="book-details.html">
+                    <div class="book">
+                        <img src="./snf.jpg" width="200" height="300" alt="Libro 3">
+                    </div>
+                </a>
+                <a href="book-details.html">
+                    <div class="book">
+                        <img src="./snf.jpg" width="200" height="300" alt="Libro 4">
+                    </div>
+                </a>
+                <a href="book-details.html">
+                    <div class="book">
+                        <img src="./snf.jpg" width="200" height="300" alt="Libro 5">
+                    </div>
+                </a>
+                <a href="book-details.html">
+                    <div class="book">
+                        <img src="./snf.jpg" width="200" height="300" alt="Libro 6">
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section class="top-10-section">
+            <h2 class="section-title">Top 10 en 5to hoy</h2>
+            <div class="top-10">
+                <a href="book-details.html">
+                    <div class="top-10-item">
+                        <div class="top-10-number">1</div>
+                        <div class="top-10-book">
+                            <img src="./bb.jpg" height="180" width="300" alt="Top 1">
+                        </div>
+                    </div>
+                </a>
+                <a href="book-details.html">
+                    <div class="top-10-item">
+                        <div class="top-10-number">2</div>
+                        <div class="top-10-book">
+                            <img src="./bb.jpg" height="180" width="300" alt="Top 2">
+                        </div>
+                    </div>
+                </a>
+                <a href="book-details.html">
+                    <div class="top-10-item">
+                        <div class="top-10-number">3</div>
+                        <div class="top-10-book">
+                            <img src="./bb.jpg" height="180" width="300" alt="Top 3">
+                        </div>
+                    </div>
+                </a>
+                <a href="book-details.html">
+                    <div class="top-10-item">
+                        <div class="top-10-number">4</div>
+                        <div class="top-10-book">
+                            <img src="./bb.jpg" height="180" width="300" alt="Top 4">
+                        </div>
+                    </div>
+                </a>
+                <a href="book-details.html">
+                    <div class="top-10-item">
+                        <div class="top-10-number">5</div>
+                        <div class="top-10-book">
+                            <img src="./bb.jpg" height="180" width="300" alt="Top 5">
+                        </div>
+                    </div>
+                </a>
+                <a href="book-details.html">
+                    <div class="top-10-item">
+                        <div class="top-10-number">6</div>
+                        <div class="top-10-book">
+                            <img src="./bb.jpg" height="180" width="300" alt="Top 6">
+                        </div>
+                    </div>
+                </a>
+                <a href="book-details.html">
+                    <div class="top-10-item">
+                        <div class="top-10-number">7</div>
+                        <div class="top-10-book">
+                            <img src="./bb.jpg" height="180" width="300" alt="Top 7">
+                        </div>
+                    </div>
+                </a>
+                <a href="book-details.html">
+                    <div class="top-10-item">
+                        <div class="top-10-number">8</div>
+                        <div class="top-10-book">
+                            <img src="./bb.jpg" height="180" width="300" alt="Top 8">
+                        </div>
+                    </div>
+                </a>
+                <a href="book-details.html">
+                    <div class="top-10-item">
+                        <div class="top-10-number">9</div>
+                        <div class="top-10-book">
+                            <img src="./bb.jpg" height="180" width="300" alt="Top 9">
+                        </div>
+                    </div>
+                </a>
+                <a href="book-details.html">
+                    <div class="top-10-item">
+                        <div class="top-10-number">10</div>
+                        <div class="top-10-book">
+                            <img src="./bb.jpg" height="180" width="300" alt="Top 10">
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const netflixLogo = document.querySelector('.netflix-logo');
+            netflixLogo.classList.add('animate');
+
+            setTimeout(() => {
+                document.getElementById('netflix-intro').style.display = 'none';
+                document.getElementById('usuario-selection').style.display = 'block';
+            }, 3000);
+        });
+
+        function selectusuario(usuarioName) {
+            document.getElementById('usuario-selection').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+            document.getElementById('selected-usuario').textContent = usuarioName;
+        }
+
+        // Add smooth scrolling for the books row and top 10 section
+        document.querySelectorAll('.books-row, .top-10').forEach(elem => {
+            elem.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                
+                elem.scrollLeft += e.deltaY;
+            });
+        });    
+    </script>
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Libro - Leerflix</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #141414;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-family: "Bebas Neue", sans-serif;
+            font-size: 36px;
+            font-weight: 400;
+            color: #e50914;
+        }
+
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .nav a:hover {
+            color: #e50914;
+        }
+
+        .banner-img {
+            width: 100%;
+            height: 500px;
+            background-image: url("./snf.jpg");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .banner {
+            position: relative;
+        }
+
+        .banner-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+        }
+
+        .book-title {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .book-metadata {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .book-description {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #e50914;
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        .btn svg {
+            margin-right: 8px;
+        }
+
+        .additional-info {
+            margin-top: 40px;
+        }
+
+        .info-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .info-content {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 480px) {
+            .nav {
+                display: none;
+            }
+
+            .banner-content {
+                position: relative;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="index.html" style="text-decoration: none;"><div class="logo">LEERFLIX</div></a>
+            <nav class="nav">
+                <a href="index.html">Home</a>
+                <a href="index.html">Libros</a>
+                <a href="index.html">Lo más votado</a>
+                <a href="index.html">5to año</a>
+            </nav>
+        </header>
+
+        <main>
+            <div class="banner">
+                <div class="banner-img"></div>
+                <div class="banner-content">
+                    <h1 class="book-title">Cien años de soledad</h1>
+                    <div class="book-metadata">
+                        <span>Gabriel García Márquez</span> | 
+                        <span>1967</span> | 
+                        <span>432 páginas</span>
+                    </div>
+                    <p class="book-description">
+                        Una de las obras maestras de la literatura latinoamericana, "Cien años de soledad" narra la historia de la familia Buendía a lo largo de siete generaciones en el ficticio pueblo de Macondo.
+                    </p>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" id="btnLeer">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M8 5V19L19 12L8 5Z" fill="currentColor"/>
+                            </svg>
+                            Leer ahora
+                        </button>
+                        <button class="btn btn-secondary" id="btnLike">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M10 15V19H14V15H18L12 9L6 15H10Z" fill="currentColor"/>
+                            </svg>
+                            Me gusta
+                        </button>
+                        <button class="btn btn-secondary" id="btnDislike">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M14 9V5H10V9H6L12 15L18 9H14Z" fill="currentColor"/>
+                            </svg>
+                            No me gusta
+                        </button>
+                        <!--  MATI, AGREGA FUNCION A LOS ME GUSTA Y NO ME GUSTA SI VAS A IMPLEMENTAR SERVIDOR. SI NO, METELE ALGUNA ANIMACION CON CSS O JS.  -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="additional-info">
+                <h2 class="info-title">Sobre este libro</h2>
+                <p class="info-content">
+                    "Cien años de soledad" es considerada una obra maestra de la literatura latinoamericana y un ejemplo destacado del realismo mágico. La novela sigue a la familia Buendía a través de varias generaciones en el pueblo ficticio de Macondo, explorando temas de amor, soledad, y el paso del tiempo. García Márquez mezcla lo ordinario con lo fantástico, creando un mundo único y fascinante que ha cautivado a lectores de todo el mundo desde su publicación en 1967.
+                </p>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnLeer = document.getElementById('btnLeer');
+            const btnLike = document.getElementById('btnLike');
+            const btnDislike = document.getElementById('btnDislike');
+
+            btnLeer.addEventListener('click', () => {
+                // Aquí puedes agregar la lógica para iniciar la lectura del libro
+            });
+
+            btnLike.addEventListener('click', () => {
+                btnLike.classList.toggle('btn-primary');
+                btnDislike.classList.remove('btn-primary');
+                // Aquí puedes agregar la lógica para registrar el "Me gusta"
+            });
+
+            btnDislike.addEventListener('click', () => {
+                btnDislike.classList.toggle('btn-primary');
+                btnLike.classList.remove('btn-primary');
+                // Aquí puedes agregar la lógica para registrar el "No me gusta"
+            });
+        });
+    </script>
+</body>
+</html>
